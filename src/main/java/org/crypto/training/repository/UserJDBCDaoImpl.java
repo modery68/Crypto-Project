@@ -1,6 +1,8 @@
 package org.crypto.training.repository;
 
 import org.crypto.training.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.Statement;
@@ -11,12 +13,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class UserDao {
+public class UserJDBCDaoImpl implements IUserDao{
     static final String DB_URL = "jdbc:postgresql://localhost:5431/training_db";
     static final String USER = "admin";
     static final String PASS = "Training123!";
-
+    @Override
     public List<User> getUsers() {
+        Logger logger = LoggerFactory.getLogger(getClass());
         //Step1: Prepare the required data model
         List<User> users = new ArrayList<User>();
         Connection conn = null;
@@ -32,6 +35,7 @@ public class UserDao {
             String sql;
             sql = "SELECT * FROM users";
             rs = stmt.executeQuery(sql);
+            logger.info("Connect to DB and execute the query");
 
             //Step4: Extract data from result set
             while(rs.next()) {
@@ -51,7 +55,8 @@ public class UserDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Unable to connect to db or execute query", e);
+
         } finally {
             //Step6: finally block used to close resources
             try {

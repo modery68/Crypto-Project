@@ -1,7 +1,7 @@
 package org.crypto.training;
 
 import org.crypto.training.model.User;
-import org.crypto.training.repository.UserDao;
+import org.crypto.training.repository.UserJDBCDaoImpl;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        UserDao userDao = new UserDao();
+        UserJDBCDaoImpl userDao = new UserJDBCDaoImpl();
         List<User> users = userDao.getUsers();
         System.out.format("List user %s", users);
     }
