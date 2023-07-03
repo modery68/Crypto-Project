@@ -85,7 +85,7 @@
         <version>8.0.2</version>
         <configuration>
           <driver>org.postgresql.Driver</driver>
-          <url>jdbc:postgresql://localhost:5431/training_db</url>
+          <url>jdbc:postgresql://localhost:5433/crypto_db</url>
           <user>admin</user>
           <password>Training123!</password>
           <locations>

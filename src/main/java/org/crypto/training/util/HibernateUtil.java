@@ -22,7 +22,7 @@ public class HibernateUtil {
     public static SessionFactory getSessionFactory()    {
         logger.info("Start get session factory");
         if(sessionFactory == null) {
-            String[] modelPackages = {"org.ascending.training.model"};
+            String[] modelPackages = {"org.crypto.training.model"};
             String dbDriver = System.getProperty("database.driver");
             String dbDialect = System.getProperty("database.dialect");
             String dbUrl = System.getProperty("database.url");

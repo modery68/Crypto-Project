@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 public class UserJDBCDaoImpl implements IUserDao{
-    static final String DB_URL = "jdbc:postgresql://localhost:5431/training_db";
+    static final String DB_URL = "jdbc:postgresql://localhost:5433/crypto_db";
     static final String USER = "admin";
     static final String PASS = "Training123!";
     @Override
@@ -68,5 +68,20 @@ public class UserJDBCDaoImpl implements IUserDao{
             }
         }
         return users;
+    }
+
+    @Override
+    public void save(User user) {
+
+    }
+
+    @Override
+    public User getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(User user) {
+        return false;
     }
 }
