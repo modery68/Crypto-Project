@@ -31,21 +31,24 @@ public class UserHibernateDaoImplTest{
         //step1: set up one side, so the following many side can map to one side
         d1 = new User();
 //        d1.setId((long) (Math.random()*(100L-1L)));
-        d1.setUsername("ab");
+        d1.setUsername("abc");
         d1.setPassword("abcd1234");
         d1.setEmail("abc@gmail.com");
         d1.setRegistration_date(new java.util.Date());
         userHibernateDao.save(d1);
 
         //step2: set up record in many side
+        assetHibernateDao = new AssetHibernateDaoImpl();
         e1 = new Asset();
         //e1.setId()
         e1.setName("aapl");
         e1.setType("stock");
         assetHibernateDao.save(e1);
 
+        investmentHibernateDao = new InvestmentHibernateDaoImpl();
         f1 = new Investment();
         //f1.setId()
+        f1.setAsset(e1);
         f1.setQuantity(new BigDecimal("3.14"));
         f1.setPurchase_price(new BigDecimal("100"));
         f1.setUser(d1);
@@ -55,8 +58,8 @@ public class UserHibernateDaoImplTest{
     @After
     public void tearDown() {
         //step 1: delete records in many side first
-        assetHibernateDao.delete(e1);
         investmentHibernateDao.delete(f1);
+        assetHibernateDao.delete(e1);
         //step 2: delete records in one side
         userHibernateDao.delete(d1);
     }

@@ -73,7 +73,7 @@ public class UserHibernateDaoImpl implements IUserDao {
         Transaction transaction = null;
         try {
             Session session = sessionFactory.openSession();
-            transaction = session.getTransaction();
+            transaction = session.beginTransaction();
             session.delete(user);
             //.........
             transaction.commit();
@@ -86,8 +86,11 @@ public class UserHibernateDaoImpl implements IUserDao {
         return true;
 
     }
+
+
+    @Override
     public User getUserEagerBy(Long id) {
-        String hql = "FROM User d LEFT JOIN FETCH d.assets where d.id = :Id"; //LEFT JOIN FETCH: HQL里面的left join
+        String hql = "FROM User d LEFT JOIN FETCH d.investments where d.id = :Id"; //LEFT JOIN FETCH: HQL里面的left join
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             Query<User> query = session.createQuery(hql);

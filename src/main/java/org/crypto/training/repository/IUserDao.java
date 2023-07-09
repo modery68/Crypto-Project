@@ -14,5 +14,5 @@ public interface IUserDao {
 
     boolean delete(User user);
 
-    User getUserEagerBY(Long id);
+    User getUserEagerBy(Long id);
 }
