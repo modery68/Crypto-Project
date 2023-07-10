@@ -6,6 +6,7 @@ import org.crypto.training.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +23,13 @@ public class InvestmentHibernateDaoImpl implements IInvestmentDao {
     @Override
     public void save(Investment investment) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Transaction transaction = null;
         try {
             Session session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
 
             session.save(investment);
+            transaction.commit();
             session.close();
 
         } catch (HibernateException e) {
@@ -65,10 +69,13 @@ public class InvestmentHibernateDaoImpl implements IInvestmentDao {
     @Override
     public boolean delete(Investment investment) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Transaction transaction = null;
         try {
             Session session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
 
             session.delete(investment);
+            transaction.commit();
             session.close();
         }catch (HibernateException e) {
             logger.error("unable to delete investment or close session", e);

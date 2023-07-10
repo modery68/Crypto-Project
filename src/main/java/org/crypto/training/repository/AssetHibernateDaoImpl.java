@@ -6,6 +6,7 @@ import org.crypto.training.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +23,13 @@ public class AssetHibernateDaoImpl implements IAssetDao {
     @Override
     public void save(Asset asset) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Transaction transaction = null;
         try {
             Session session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
 
             session.save(asset);
+            transaction.commit();
             session.close();
 
         } catch (HibernateException e) {
@@ -65,10 +69,15 @@ public class AssetHibernateDaoImpl implements IAssetDao {
     @Override
     public boolean delete(Asset asset) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Transaction transaction = null;
+
         try {
             Session session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
 
             session.delete(asset);
+            transaction.commit();
+
             session.close();
         }catch (HibernateException e) {
             logger.error("unable to delete user or close session", e);
