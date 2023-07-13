@@ -4,20 +4,27 @@ package org.crypto.training.repository;
 import org.crypto.training.model.Asset;
 import org.crypto.training.model.Investment;
 import org.crypto.training.model.User;
+import org.crypto.training.util.ApplicationBootStrap;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.Assert.*;
-
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = ApplicationBootStrap.class)
 public class UserHibernateDaoImplTest{
+    @Autowired
     private UserHibernateDaoImpl userHibernateDao;
-
+    @Autowired
     private AssetHibernateDaoImpl assetHibernateDao;
-
+    @Autowired
     private InvestmentHibernateDaoImpl investmentHibernateDao;
 
     private Asset e1;
@@ -27,7 +34,7 @@ public class UserHibernateDaoImplTest{
     private User d1;
     @Before
     public void setup(){
-        userHibernateDao = new UserHibernateDaoImpl();
+//       userHibernateDao = new UserHibernateDaoImpl();
         //step1: set up one side, so the following many side can map to one side
         d1 = new User();
 //        d1.setId((long) (Math.random()*(100L-1L)));
@@ -38,14 +45,14 @@ public class UserHibernateDaoImplTest{
         userHibernateDao.save(d1);
 
         //step2: set up record in many side
-        assetHibernateDao = new AssetHibernateDaoImpl();
+//        assetHibernateDao = new AssetHibernateDaoImpl();
         e1 = new Asset();
         //e1.setId()
         e1.setName("aapl");
         e1.setType("stock");
         assetHibernateDao.save(e1);
 
-        investmentHibernateDao = new InvestmentHibernateDaoImpl();
+//     investmentHibernateDao = new InvestmentHibernateDaoImpl();
         f1 = new Investment();
         //f1.setId()
         f1.setAsset(e1);

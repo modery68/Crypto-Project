@@ -1,8 +1,10 @@
 package org.crypto.training.repository;
 
 import org.crypto.training.model.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 
 public interface IUserDao {
 
