@@ -23,7 +23,7 @@ public class UserHibernateDaoImpl implements IUserDao {
     @Override
     public void save(User user) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Transaction transaction = null; // transaction 的目的是在进行对数据库改动的时候的一个预防出错的工具
+        Transaction transaction = null; // transaction : error prevention during the database change
         try {
             Session session = sessionFactory.openSession();
             transaction = session.beginTransaction();
@@ -44,13 +44,12 @@ public class UserHibernateDaoImpl implements IUserDao {
         logger.info("Start to getUser from Postgres via Hibernate.");
 
         List<User> users = new ArrayList<>();// prepare model
-
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory(); // establish connection
 
         try {
             Session session = sessionFactory.openSession();
 
-            String hql = "from User"; // execute query
+            String hql = "from User"; // execute query // no need to mock basic data type
             Query<User> query = session.createQuery(hql);
 
             users = query.list();// extract data
