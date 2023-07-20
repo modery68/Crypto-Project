@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -19,10 +20,11 @@ public class UserHibernateDaoImpl implements IUserDao {
 
     private static final Logger logger = LoggerFactory.getLogger(UserHibernateDaoImpl.class);
 
-
+    @Autowired
+    private SessionFactory sessionFactory;
     @Override
     public void save(User user) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+
         Transaction transaction = null; // transaction : error prevention during the database change
         try {
             Session session = sessionFactory.openSession();
@@ -44,7 +46,7 @@ public class UserHibernateDaoImpl implements IUserDao {
         logger.info("Start to getUser from Postgres via Hibernate.");
 
         List<User> users = new ArrayList<>();// prepare model
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory(); // establish connection
+        // establish connection
 
         try {
             Session session = sessionFactory.openSession();
@@ -64,12 +66,26 @@ public class UserHibernateDaoImpl implements IUserDao {
 
     @Override
     public User getById(Long id) {
-        return null;
+        Session s = sessionFactory.openSession();
+        String hql = "FROM User d where id = :ID";
+        //String hql = "FROM Department d JOIN FETCH d.employees where dold=tId"
+    try{
+        Query<User> query = s.createQuery(hql);
+        query.setParameter("ID", id);
+        User result = query.uniqueResult();
+        s.close();
+        return result;
+    }catch(HibernateException e){
+            logger.error("Session close exception try again", e);
+            s.close();
+
+            return null;
+        }
     }
 
     @Override
     public boolean delete(User user) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+
         Transaction transaction = null;
         try {
             Session session = sessionFactory.openSession();
@@ -91,7 +107,7 @@ public class UserHibernateDaoImpl implements IUserDao {
     @Override
     public User getUserEagerBy(Long id) {
         String hql = "FROM User d LEFT JOIN FETCH d.investments where d.id = :Id"; //LEFT JOIN FETCH: HQL里面的left join
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         try {
             Query<User> query = session.createQuery(hql);
             query.setParameter("Id", id);
@@ -101,6 +117,26 @@ public class UserHibernateDaoImpl implements IUserDao {
         } catch (HibernateException e) {
             logger.error("failed to retrieve data record", e);
             session.close();
+            return null;
+        }
+    }
+
+    @Override
+    public User update(User user) {
+        Session s = sessionFactory.openSession();
+        Transaction transaction = null;
+        try {
+            transaction = s.beginTransaction();
+            s.update(user);
+            User u = getById(user.getId());
+            transaction.commit();
+            s.close();
+            return u;
+        }catch (HibernateException e) {
+            if(transaction != null)
+                transaction.rollback();
+            logger.error("failed to insert record", e);
+            s.close();
             return null;
         }
     }

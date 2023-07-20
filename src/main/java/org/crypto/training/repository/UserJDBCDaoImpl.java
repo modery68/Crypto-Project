@@ -90,4 +90,9 @@ public class UserJDBCDaoImpl implements IUserDao{
         return null;
     }
 
+    @Override
+    public User update(User user) {
+        return null;
+    }
+
 }

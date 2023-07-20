@@ -1,5 +1,7 @@
 package org.crypto.training.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -30,6 +32,7 @@ public class User {
     private Date registration_date;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY) // cascade: remove correlated data in another table
+    @JsonIgnore
     private Set<Investment> investments;
 
     public Set<Investment> getInvestments() {

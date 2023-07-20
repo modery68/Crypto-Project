@@ -21,7 +21,7 @@ public class UserService {
     }
 
     public User update(User user) {
-        return userDao.getById(user.getId());
+        return userDao.update(user);
     }
 
     public boolean delete(User user) {
@@ -30,5 +30,9 @@ public class UserService {
 
     public User getUserEager(long id) {
         return userDao.getUserEagerBy(id);
+    }
+
+    public User getBy(long id) {
+        return userDao.getById(id);
     }
 }
