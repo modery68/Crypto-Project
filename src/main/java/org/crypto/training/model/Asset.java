@@ -16,7 +16,6 @@ public class Asset {
     private String name;
     @Column(name = "type")
     private String type;
-
     @OneToMany(mappedBy = "asset", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Set<Investment> investments;
 
