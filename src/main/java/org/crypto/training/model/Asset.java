@@ -1,6 +1,7 @@
 package org.crypto.training.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,6 +19,9 @@ public class Asset {
     private String type;
     @OneToMany(mappedBy = "asset", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Set<Investment> investments;
+
+    @ManyToMany(mappedBy = "assets")
+    private List<User> users;
 
     public long getId() {
         return id;

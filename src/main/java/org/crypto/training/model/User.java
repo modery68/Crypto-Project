@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,6 +36,10 @@ public class User {
     @JsonIgnore
     private Set<Investment> investments;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "users_assets", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "asset_id")})
+    @JsonIgnore
+    private List<Asset> assets;
     public Set<Investment> getInvestments() {
         return investments;
     }

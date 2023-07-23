@@ -12,7 +12,11 @@ public interface IInvestmentDao {
 
     void save(Investment investment);
 
-    User getById(Long id);
+    Investment getById(Long id);
 
     boolean delete(Investment investment);
+
+    Investment getInvestmentEagerBy(Long id);
+
+    Investment update(Investment investment);
 }

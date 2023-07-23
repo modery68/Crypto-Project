@@ -24,7 +24,7 @@ public class System_User {
     private String email;
 
 
-    @ManyToMany// usually put Jointable on service logic side
+    @ManyToMany(cascade = CascadeType.ALL)// usually put Jointable on service logic side
     @JoinTable(name = "system_users_roles", joinColumns = {@JoinColumn(name = "system_user_id")}, inverseJoinColumns = {@JoinColumn(name = "roles_id")})
     @JsonIgnore// dont want egerfecth
     private List<Role> roles;

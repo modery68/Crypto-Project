@@ -1,7 +1,6 @@
 package org.crypto.training.repository;
 
 import org.crypto.training.model.User;
-import org.crypto.training.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
