@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class HibernateConfig {
 
     @Bean
-    public SessionFactory getHubernateSessionFactory() {
+    public SessionFactory getHibernateSessionFactory() {
 
         return HibernateUtil.getSessionFactory();
     }

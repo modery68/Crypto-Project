@@ -1,11 +1,14 @@
 package org.crypto.training.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.codec.digest.DigestUtils;
 
-import javax.annotation.security.RolesAllowed;
 import javax.persistence.*;
 import java.util.List;
 
+
+@Entity
+@Table(name = "system_users")
 public class System_User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +28,7 @@ public class System_User {
 
 
     @ManyToMany(cascade = CascadeType.ALL)// usually put Jointable on service logic side
-    @JoinTable(name = "system_users_roles", joinColumns = {@JoinColumn(name = "system_user_id")}, inverseJoinColumns = {@JoinColumn(name = "roles_id")})
+    @JoinTable(name = "system_users_roles", joinColumns = {@JoinColumn(name = "system_user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
     @JsonIgnore// dont want egerfecth
     private List<Role> roles;
 
@@ -51,7 +54,8 @@ public class System_User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+
+        this.password = DigestUtils.md5Hex(password.trim());
     }
 
     public String getSecretKey() {
