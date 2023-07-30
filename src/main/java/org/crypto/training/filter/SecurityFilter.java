@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+@WebFilter(filterName = "securityFilter", urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST})
 public class SecurityFilter implements Filter {
 
     @Autowired
@@ -47,28 +49,50 @@ public class SecurityFilter implements Filter {
 
     private int authorization(HttpServletRequest req) {
         int statusCode = HttpServletResponse.SC_UNAUTHORIZED;
-        String url = req.getRequestURI();
-        if (IGNORED_PATH.contains(url)) {
+        String uri = req.getRequestURI();
+        if (IGNORED_PATH.contains(uri)) {
             return HttpServletResponse.SC_ACCEPTED;
         }
 
+        String verb = req.getMethod();
+
         try {
-            String token = req.getHeader("Authorization").replaceAll("^(.*?)", "");
-            if (token == null || token.isEmpty()) {
+            String token = req.getHeader("Authorization").replaceAll("^(.*?) ", "");
+            if (token == null || token.isEmpty())
                 return statusCode;
-            }
 
             Claims claims = jwtService.decryptToken(token);
-            logger.info("===== after parsing JWT token, claims.get()={}", claims.getId());
-
+            logger.info("===== after parsing JWT token, claims.getId()={}", claims.getId());
+            //TODO pass username and check role
             if (claims.getId() != null) {
-                System_User s = system_userService.getSystem_UserById(Long.valueOf(claims.getId()));
-                if (s != null) {
-                    statusCode = HttpServletResponse.SC_ACCEPTED;
+                System_User u = system_userService.getSystem_UserById(Long.valueOf(claims.getId()));
+                //加redis cache
+                if (u == null) {
+                    return statusCode;
                 }
             }
-        }catch (Exception e) {
-            logger.info("Cannot get token");
+
+            String allowedResources = "/";
+            switch (verb) {
+                case "GET":
+                    allowedResources = (String) claims.get("allowedResources");
+                case "POST":
+                    allowedResources = (String) claims.get("allowedCreateResources");
+                case "PUT":
+                    allowedResources = (String) claims.get("allowedUpdateResources");
+                case "DELETE":
+                    allowedResources = (String) claims.get("allowedDeleteResources");
+            }
+
+
+            for (String s : allowedResources.split(",")) {
+                if (uri.trim().toLowerCase().startsWith(s.trim().toLowerCase())) {
+                    statusCode = HttpServletResponse.SC_ACCEPTED;
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            logger.info("cannot get token");
         }
         return statusCode;
     }

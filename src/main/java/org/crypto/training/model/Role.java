@@ -79,4 +79,20 @@ public class Role {
     public void setAllowedDelete(Boolean allowedDelete) {
         this.allowedDelete = allowedDelete;
     }
+
+    public boolean isAllowedRead() {
+        return allowedRead;
+    }
+
+    public boolean isAllowedCreate() {
+        return allowedCreate;
+    }
+
+    public boolean isAllowedUpdate() {
+        return allowedUpdate;
+    }
+
+    public boolean isAllowedDelete() {
+        return allowedDelete;
+    }
 }

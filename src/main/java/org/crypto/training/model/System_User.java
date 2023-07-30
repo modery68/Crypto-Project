@@ -89,4 +89,8 @@ public class System_User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
 }
