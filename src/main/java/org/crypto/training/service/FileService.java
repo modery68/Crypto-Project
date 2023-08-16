@@ -3,12 +3,15 @@ package org.crypto.training.service;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 
 @Service
 public class FileService {
@@ -18,21 +21,25 @@ public class FileService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     String bucketName = "s3-test-bu";
 
+    String stringObjKeyName = "sampleFile.txt";
+
     @Autowired
     AmazonS3 s3Client;
-    String stringObjKeyName = "sampleFile.txt";
-    public void uploadFile(File file) {
-    if(file == null) {
-        logger.error("cannot upload a null file");
-        return;
-    }
-    try{
-        s3Client.putObject(bucketName, file.getName(), file);
-    }catch(AmazonServiceException e) {
-        e.printStackTrace();
-    }catch(SdkClientException e) {
 
-        e.printStackTrace();
+    public String uploadFile(String bucketName, MultipartFile file) throws IOException {
+        if (file == null) {
+            logger.error("Cannot upload a null file");
+            return bucketName;
+        }
+        PutObjectRequest request = new PutObjectRequest(bucketName,
+                file.getOriginalFilename(), file.getInputStream(), null);
+        s3Client.putObject(request);
+        return getUrl(bucketName, file.getName());
+
     }
+
+    private String getUrl(String bucketName, String s3Key) {
+
+        return s3Client.getUrl(bucketName, s3Key).toString();
     }
-    }
+}
