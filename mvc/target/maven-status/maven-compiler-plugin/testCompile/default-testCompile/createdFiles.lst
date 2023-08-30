@@ -1,0 +1,9 @@
+org/crypto/training/service/JWTServiceTest.class
+org/crypto/training/repository/UserHibernateDaoImplTest.class
+org/crypto/training/AppTest.class
+org/crypto/training/service/FileServiceTest.class
+org/crypto/training/repository/RoleHibernateDaoImplTest.class
+org/crypto/training/repository/UserHibernateDaoTest.class
+org/crypto/training/config/AWSTestConfig.class
+org/crypto/training/service/MessageServiceTest.class
+org/crypto/training/repository/UserJDBCDaoImplTest.class

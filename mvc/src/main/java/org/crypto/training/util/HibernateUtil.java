@@ -29,6 +29,8 @@ public class HibernateUtil {
             String dbUser = System.getProperty("database.user");
             String dbPassword = System.getProperty("database.password");
 
+            logger.info("$$$$" + dbDriver + dbDialect +dbPassword + dbUrl + dbUser);
+
             Configuration configuration = new Configuration();
             Properties settings = new Properties();
 

@@ -28,7 +28,7 @@ public class SecurityFilter implements Filter {
 
     private static final Set<String> ALLOWED_PATH = new HashSet<>(Arrays.asList("", "/login", "logout", "register"));
 
-    private static final Set<String> IGNORED_PATH = new HashSet<>(Arrays.asList("/auth"));
+    private static final Set<String> IGNORED_PATH = new HashSet<>(Arrays.asList("/auth", "/user"));
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

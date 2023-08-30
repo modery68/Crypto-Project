@@ -11,9 +11,11 @@ org/crypto/training/repository/UserHibernateDaoImpl.class
 org/crypto/training/filter/LogFilter.class
 org/crypto/training/repository/AssetHibernateDaoImpl.class
 org/crypto/training/service/AssetService.class
+org/crypto/training/service/RoleService.class
 org/crypto/training/service/UserService.class
 org/crypto/training/service/JWTService.class
 org/crypto/training/model/System_User.class
+org/crypto/training/repository/RoleHibernateDaoImpl.class
 org/crypto/training/service/System_UserService.class
 org/crypto/training/ApplicationBootStrap.class
 org/crypto/training/controller/UserController.class
@@ -28,6 +30,7 @@ org/crypto/training/controller/FileController.class
 org/crypto/training/service/FileService.class
 org/crypto/training/controller/AuthController.class
 org/crypto/training/filter/SecurityFilter.class
+org/crypto/training/repository/IRoleDao.class
 org/crypto/training/repository/System_UserDaoImpl.class
 org/crypto/training/controller/AssetController.class
 org/crypto/training/repository/ISystem_UserDao.class

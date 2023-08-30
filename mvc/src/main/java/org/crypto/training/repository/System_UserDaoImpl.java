@@ -51,7 +51,8 @@ public class System_UserDaoImpl implements ISystem_UserDao {
             Query<System_User> query = session.createQuery(hql);
             query.setParameter("email", email.toLowerCase().trim());
             query.setParameter("password", password);
-            return query.uniqueResult();
+            System_User s = query.uniqueResult();
+            return s;
         }catch (Exception e) {
             logger.error("error: {}", e.getMessage());
             throw new System_UserNotFoundException("can't find user record with email="+email+ ", password="+password);

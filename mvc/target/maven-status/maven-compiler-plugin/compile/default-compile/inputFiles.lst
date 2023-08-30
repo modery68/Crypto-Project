@@ -1,4 +1,5 @@
 /Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/controller/UserController.java
+/Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/repository/RoleHibernateDaoImpl.java
 /Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/controller/AssetController.java
 /Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/repository/UserHibernateDaoImpl.java
 /Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/service/AssetService.java
@@ -7,6 +8,7 @@
 /Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/repository/UserJDBCDaoImpl.java
 /Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/model/Investment.java
 /Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/repository/IUserDao.java
+/Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/repository/IRoleDao.java
 /Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/util/HibernateUtil.java
 /Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/repository/System_UserDaoImpl.java
 /Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/controller/InvestmentController.java
@@ -27,6 +29,7 @@
 /Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/controller/AuthController.java
 /Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/repository/exception/System_UserNotFoundException.java
 /Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/filter/SecurityFilter.java
+/Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/service/RoleService.java
 /Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/service/JWTService.java
 /Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/service/System_UserService.java
 /Users/zuoyuwei/IdeaProjects/Crypto_Project-main/mvc/src/main/java/org/crypto/training/repository/IAssetDao.java

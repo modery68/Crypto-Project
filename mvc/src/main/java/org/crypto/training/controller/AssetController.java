@@ -37,6 +37,7 @@ public class AssetController {
     }
     @RequestMapping(value = "")
     public void create(@RequestBody Asset asset) {
+
         logger.info("Post a new object {}", asset.getName());
     }
 

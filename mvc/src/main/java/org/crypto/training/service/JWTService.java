@@ -31,6 +31,8 @@ public class JWTService {
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
 
+
+
         //claims = payload, set payload
         Claims claims = Jwts.claims();
         claims.setId(String.valueOf(system_user.getId()));
@@ -38,6 +40,7 @@ public class JWTService {
         claims.setIssuedAt(new Date(System.currentTimeMillis()));
         claims.setIssuer(ISSUER);
         claims.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME));
+
 
         List<Role> roles = system_user.getRoles();
         String allowedReadResources = "";

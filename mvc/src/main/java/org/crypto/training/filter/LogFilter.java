@@ -1,7 +1,11 @@
 package org.crypto.training.filter;
 
+import org.crypto.training.service.JWTService;
+import org.crypto.training.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -12,7 +16,11 @@ import java.text.SimpleDateFormat;
 
 @WebFilter(filterName = "logFilter", urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST})
 public class LogFilter implements Filter {
+    @Autowired
+    private JWTService jwtService;
 
+    @Autowired
+    private UserService userService;
     private Logger logger = LoggerFactory.getLogger(getClass());
     private final List<String> excludedWords = Arrays.asList("newPasswd", "confirmPasswd", "passwd", "password");
     private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
@@ -24,6 +32,12 @@ public class LogFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+
+        // Check null or not before use. Initialize dependency first then inject.
+        if (jwtService == null) {
+            // Once injected, it will inject all dependencies required by various filter instance.
+            SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, servletRequest.getServletContext());
+        }
         long startTime = System.currentTimeMillis();
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         String logInfo = logInfo(req);

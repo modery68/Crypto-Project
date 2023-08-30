@@ -1,9 +1,13 @@
 package org.crypto.training.controller;
+import org.crypto.training.model.Role;
 import org.crypto.training.model.User;
+import org.crypto.training.service.RoleService;
 import org.crypto.training.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -14,6 +18,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<User> getUsers() {
@@ -35,8 +42,17 @@ public class UserController {
         u = userService.update(u);
         return u;
     }
-    @RequestMapping(value = "")
-    public void create(@RequestBody User user) {
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public ResponseEntity<?> create(@RequestBody User user) {
         logger.info("Post a new object {}", user.getUsername());
+        try{
+
+            userService.save(user);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }catch (Exception e){
+            logger.error("Error creating user: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }
